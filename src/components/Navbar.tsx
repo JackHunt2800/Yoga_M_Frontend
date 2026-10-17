@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '../context/AuthContext';
-import { Button, Drawer, Dropdown, MenuProps, Tag, Tooltip } from 'antd';
+import { Button, Drawer, Dropdown, MenuProps, Tag, Tooltip, message } from 'antd';
 import {
   MenuOutlined,
   GoogleOutlined,
@@ -54,7 +54,18 @@ export const Navbar: React.FC = () => {
       key: 'google-auth',
       icon: <GoogleOutlined />,
       label: user ? 'Re-authenticate with Google' : 'Sign in with Google',
-      onClick: () => loginWithGoogle(),
+      onClick: async () => {
+        try {
+          await loginWithGoogle();
+          message.success('Successfully authenticated!');
+        } catch (err: any) {
+          if (err?.code === 'auth/unauthorized-domain') {
+            message.error('Domain not authorized in Firebase Console Settings!');
+          } else {
+            message.error(err?.message || 'Google authentication failed.');
+          }
+        }
+      },
     },
     { type: 'divider' },
     {

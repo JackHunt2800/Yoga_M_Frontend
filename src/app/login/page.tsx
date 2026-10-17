@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../context/AuthContext';
@@ -10,14 +10,43 @@ import { GoogleOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 export default function LoginPage() {
   const router = useRouter();
   const { user, loginWithGoogle, isFirebaseLive } = useAuth();
-
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isSigningIn, setIsSigningIn] = useState<boolean>(false);
 
   const handleGoogleSignIn = async () => {
+    setErrorMessage(null);
+    setIsSigningIn(true);
     try {
       await loginWithGoogle();
       router.push('/');
-    } catch (e) {
-      console.error(e);
+    } catch (e: any) {
+      console.error('Google Sign-In Error:', e);
+      const code = e?.code || '';
+      const currentHost = typeof window !== 'undefined' ? window.location.hostname : 'your Vercel domain';
+
+      if (code === 'auth/unauthorized-domain') {
+        setErrorMessage(
+          `Domain "${currentHost}" is not authorized. Please go to Firebase Console > Authentication > Settings > Authorized domains and add "${currentHost}".`
+        );
+      } else if (code === 'auth/invalid-api-key' || code === 'auth/api-key-not-valid') {
+        setErrorMessage(
+          'Firebase API Key is missing or invalid. Please check your NEXT_PUBLIC_FIREBASE_* environment variables in your Vercel project settings.'
+        );
+      } else if (code === 'auth/popup-closed-by-user') {
+        setErrorMessage(
+          'Sign-in popup was closed before authentication finished. If this closed automatically, your domain is likely unauthorized in Firebase Console.'
+        );
+      } else if (code === 'auth/popup-blocked') {
+        setErrorMessage('Sign-in popup was blocked by the browser. Please allow popups for this site.');
+      } else if (code === 'auth/configuration-not-found' || code === 'auth/operation-not-allowed') {
+        setErrorMessage(
+          'Google Sign-in is not enabled in Firebase Console. Go to Authentication > Sign-in method > Google and enable it.'
+        );
+      } else {
+        setErrorMessage(e?.message || 'Failed to sign in with Google. Check browser console for details.');
+      }
+    } finally {
+      setIsSigningIn(false);
     }
   };
 
@@ -107,10 +136,33 @@ export default function LoginPage() {
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+            {errorMessage && (
+              <Alert
+                message="Authentication Error"
+                description={errorMessage}
+                type="error"
+                showIcon
+                closable
+                onClose={() => setErrorMessage(null)}
+                style={{ borderRadius: 12, textAlign: 'left' }}
+              />
+            )}
+
+            {!isFirebaseLive && !errorMessage && (
+              <Alert
+                message="Firebase Config Missing"
+                description="Firebase environment variables are not detected. Make sure NEXT_PUBLIC_FIREBASE_* variables are set in your Vercel Project Settings."
+                type="warning"
+                showIcon
+                style={{ borderRadius: 12, textAlign: 'left' }}
+              />
+            )}
+
             {/* Primary Google Login Button */}
             <Button
               type="primary"
               size="large"
+              loading={isSigningIn}
               icon={<GoogleOutlined />}
               onClick={handleGoogleSignIn}
               style={{
@@ -127,7 +179,7 @@ export default function LoginPage() {
                 boxShadow: '0 4px 14px rgba(18, 19, 20, 0.2)',
               }}
             >
-              Continue with Google
+              {isSigningIn ? 'Connecting to Google...' : 'Continue with Google'}
             </Button>
           </div>
         )}
