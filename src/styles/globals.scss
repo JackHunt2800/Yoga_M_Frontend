@@ -1,0 +1,203 @@
+@import './variables.scss';
+
+// Google Fonts & Material Symbols
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: $color-canvas;
+  color: $color-charcoal-text;
+  font-family: $font-body;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+/* Material symbols utility */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+  line-height: 1;
+  display: inline-block;
+
+  &.filled {
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+}
+
+/* Typography Helpers */
+.font-serif {
+  font-family: $font-headline;
+}
+
+.font-sans {
+  font-family: $font-body;
+}
+
+/* Subtle Ambient Glow */
+.ambient-glow-amber {
+  position: absolute;
+  width: 24rem;
+  height: 24rem;
+  border-radius: $radius-full;
+  background: radial-gradient(circle, rgba(253, 243, 208, 0.8) 0%, rgba(250, 248, 240, 0) 70%);
+  filter: blur(48px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ambient-glow-terracotta {
+  position: absolute;
+  width: 20rem;
+  height: 20rem;
+  border-radius: $radius-full;
+  background: radial-gradient(circle, rgba(200, 125, 85, 0.15) 0%, rgba(250, 248, 240, 0) 70%);
+  filter: blur(40px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ant Design Component Overrides */
+.ant-btn-primary {
+  background-color: $color-slate-black !important;
+  color: #ffffff !important;
+  border-color: $color-slate-black !important;
+  border-radius: $radius-md !important;
+  font-weight: 600 !important;
+  box-shadow: $shadow-warm-sm !important;
+  transition: all 0.2s ease !important;
+
+  &:hover {
+    background-color: #2c2614 !important;
+    border-color: #2c2614 !important;
+    transform: translateY(-1px);
+    box-shadow: $shadow-warm-md !important;
+  }
+}
+
+.ant-btn-default {
+  background-color: $color-canvas-pure !important;
+  border-color: $color-parchment-dim !important;
+  color: $color-slate-black !important;
+  border-radius: $radius-md !important;
+  font-weight: 500 !important;
+
+  &:hover {
+    background-color: $color-parchment-surface !important;
+    border-color: $color-slate-black !important;
+    color: $color-slate-black !important;
+  }
+}
+
+.ant-card {
+  border-radius: $radius-xl !important;
+  border-color: $color-parchment-dim !important;
+  background-color: $color-canvas-pure !important;
+  box-shadow: $shadow-warm-sm !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+
+  &:hover {
+    box-shadow: $shadow-warm-md !important;
+  }
+}
+
+.ant-modal-content {
+  border-radius: $radius-2xl !important;
+  background-color: $color-canvas-pure !important;
+  border: 1px solid $color-parchment-dim !important;
+  box-shadow: $shadow-warm-lg !important;
+  padding: 24px !important;
+}
+
+.ant-tag {
+  border-radius: $radius-full !important;
+  padding: 2px 10px !important;
+  font-weight: 600 !important;
+  font-size: 11px !important;
+  letter-spacing: 0.02em !important;
+  border: 1px solid $color-parchment-dim !important;
+}
+
+.ant-switch-checked {
+  background-color: $color-slate-black !important;
+}
+
+/* Animations */
+@keyframes breathPulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+}
+
+.animate-breath {
+  animation: breathPulse 6s ease-in-out infinite;
+}
+
+@keyframes gentleFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-float {
+  animation: gentleFloat 4s ease-in-out infinite;
+}
+
+/* Waveform Visualizer Animation */
+@keyframes barWave {
+  0%, 100% {
+    height: 6px;
+  }
+  50% {
+    height: 22px;
+  }
+}
+
+.sound-bar {
+  width: 3px;
+  background-color: $color-deep-amber;
+  border-radius: 9999px;
+  animation: barWave 1.2s ease-in-out infinite;
+
+  &:nth-child(2) { animation-delay: 0.2s; }
+  &:nth-child(3) { animation-delay: 0.4s; }
+  &:nth-child(4) { animation-delay: 0.1s; }
+  &:nth-child(5) { animation-delay: 0.5s; }
+}
+
+/* Hide scrollbar while allowing scrolling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(222, 214, 195, 0.7);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(168, 117, 30, 0.5);
+}
