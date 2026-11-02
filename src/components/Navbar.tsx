@@ -234,6 +234,26 @@ export const Navbar: React.FC = () => {
                 </Link>
 
                 <Link
+                  href="/practice"
+                  style={{
+                    height: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 6,
+                    fontSize: 14,
+                    fontWeight: pathname === '/practice' ? 600 : 500,
+                    color: pathname === '/practice' ? '#121314' : '#5C5E62',
+                    borderBottom: pathname === '/practice' ? '2px solid #121314' : '2px solid transparent',
+                    textDecoration: 'none',
+                  }}
+                >
+                  <span className="material-symbols-outlined" style={{ fontSize: 18 }}>
+                    queue_music
+                  </span>
+                  Practice Playlists
+                </Link>
+
+                <Link
                   href="/admin/curriculum"
                   style={{
                     height: '100%',
@@ -456,6 +476,25 @@ export const Navbar: React.FC = () => {
             >
               <span className="material-symbols-outlined">self_improvement</span>
               Today&apos;s Practice
+            </Link>
+
+            <Link
+              href="/practice"
+              onClick={() => setMobileMenuOpen(false)}
+              style={{
+                padding: '10px 12px',
+                borderRadius: 8,
+                backgroundColor: pathname === '/practice' ? '#121314' : 'transparent',
+                color: pathname === '/practice' ? '#FFFFFF' : '#111213',
+                textDecoration: 'none',
+                fontWeight: 600,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
+              }}
+            >
+              <span className="material-symbols-outlined">queue_music</span>
+              Practice Playlists
             </Link>
 
             <Link

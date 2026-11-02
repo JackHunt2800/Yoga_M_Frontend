@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { api, PracticeItem, TodayClassReview } from '../lib/api';
 import { useAuth } from '../context/AuthContext';
 import { Button, Tag, Spin, Tooltip, message } from 'antd';
@@ -11,6 +12,7 @@ import { PracticeRunnerModal } from '../components/PracticeRunnerModal';
 import { AnatomicalCueModal } from '../components/AnatomicalCueModal';
 
 export default function StudentHomePage() {
+  const router = useRouter();
   const { user } = useAuth();
   const [sessionData, setSessionData] = useState<TodayClassReview | null>(null);
   const [loading, setLoading] = useState(true);
@@ -283,7 +285,7 @@ export default function StudentHomePage() {
                 <Button
                   type="primary"
                   size="large"
-                  onClick={() => setRunnerOpen(true)}
+                  onClick={() => router.push('/practice')}
                   icon={
                     <span className="material-symbols-outlined filled" style={{ fontSize: 20 }}>
                       play_arrow
