@@ -1,0 +1,761 @@
+@import './variables.scss';
+
+.profilePage {
+  width: 100%;
+  min-height: calc(100vh - 64px);
+  background-color: #faf8f0;
+  color: $color-charcoal-text;
+  font-family: $font-body;
+  padding: 24px 16px 64px;
+
+  @media (min-width: 640px) {
+    padding: 32px 24px 72px;
+  }
+
+  @media (min-width: 1024px) {
+    padding: 40px 32px 88px;
+  }
+}
+
+.container {
+  max-width: 1360px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+// Top Editorial Header
+.headerRow {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 32px;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+    margin-bottom: 40px;
+  }
+}
+
+.headerContent {
+  max-width: 760px;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $color-charcoal-muted;
+  font-weight: 600;
+  margin-bottom: 12px;
+
+  .crumbLink {
+    color: $color-charcoal-muted;
+    text-decoration: none;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $color-slate-black;
+    }
+  }
+
+  .divider {
+    color: $color-deep-amber;
+    font-weight: 700;
+  }
+
+  .activeCrumb {
+    color: $color-slate-black;
+  }
+}
+
+.title {
+  font-family: $font-headline;
+  font-size: 28px;
+  line-height: 1.25;
+  font-weight: 600;
+  color: $color-slate-black;
+  letter-spacing: -0.02em;
+  margin: 0 0 10px 0;
+
+  @media (min-width: 768px) {
+    font-size: 36px;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 40px;
+  }
+}
+
+.description {
+  font-size: 15px;
+  line-height: 1.6;
+  color: $color-charcoal-muted;
+  margin: 0;
+
+  @media (min-width: 768px) {
+    font-size: 16px;
+  }
+
+  .teacherHighlight {
+    color: $color-slate-black;
+    font-weight: 600;
+  }
+}
+
+.headerActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  align-self: flex-start;
+
+  @media (min-width: 768px) {
+    align-self: auto;
+    gap: 16px;
+  }
+}
+
+.syncBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #f5f0e3;
+  padding: 8px 16px;
+  border-radius: $radius-full;
+  font-size: 12px;
+  font-weight: 500;
+  color: $color-charcoal-text;
+  border: 1px solid #dfd6c3;
+  box-shadow: 0 1px 4px rgba(28, 24, 18, 0.04);
+  white-space: nowrap;
+
+  .pulseDot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: $color-soft-amber;
+    box-shadow: 0 0 8px rgba(212, 155, 56, 0.6);
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.85);
+  }
+}
+
+.saveButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: $color-slate-black;
+  color: #faebd0;
+  border: 1px solid transparent;
+  padding: 10px 22px;
+  border-radius: $radius-full;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 8px rgba(18, 19, 20, 0.16);
+  min-height: 44px;
+
+  &:hover:not(:disabled) {
+    background-color: #2a2d30;
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(18, 19, 20, 0.22);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &.saved {
+    background-color: #faebd0;
+    color: $color-slate-black;
+    border-color: #d9a74a;
+  }
+
+  .saveIcon {
+    font-size: 18px;
+    transition: transform 0.2s ease;
+  }
+
+  &:hover .saveIcon {
+    transform: rotate(12deg);
+  }
+}
+
+// Main Workspace Grid
+.mainGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  align-items: start;
+
+  @media (min-width: 1024px) {
+    grid-template-columns: 4fr 8fr;
+    gap: 32px;
+  }
+}
+
+// Left Column (Identity Card)
+.leftColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  @media (min-width: 1024px) {
+    position: sticky;
+    top: 84px;
+    align-self: start;
+  }
+}
+
+.identityCard {
+  background-color: #f5f0e3;
+  border-radius: $radius-xl;
+  padding: 24px 20px;
+  border: 1px solid #dfd6c3;
+  box-shadow: 0 2px 12px rgba(28, 24, 18, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  @media (min-width: 640px) {
+    padding: 32px 28px;
+  }
+}
+
+.avatarWrapper {
+  position: relative;
+  margin-bottom: 18px;
+}
+
+.avatarFrame {
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #faebd0;
+  border: 3px solid #dfd6c3;
+  padding: 3px;
+  box-shadow: 0 4px 16px rgba(28, 24, 18, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .avatarFallback {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: $color-sage-primary;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: 600;
+    font-family: $font-headline;
+  }
+}
+
+.userName {
+  font-family: $font-headline;
+  font-size: 22px;
+  font-weight: 600;
+  color: $color-slate-black;
+  margin: 0 0 6px 0;
+}
+
+.roleBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: $radius-full;
+  background-color: #faebd0;
+  color: $color-slate-black;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin-bottom: 12px;
+  border: 1px solid #ede5d1;
+
+  .verifiedIcon {
+    font-size: 14px;
+    color: $color-deep-amber;
+  }
+}
+
+.userBio {
+  font-size: 13px;
+  line-height: 1.5;
+  color: $color-charcoal-muted;
+  margin: 0 0 20px 0;
+  max-width: 280px;
+}
+
+.metadataBox {
+  width: 100%;
+  background-color: #fcfaf4;
+  border-radius: $radius-lg;
+  padding: 16px;
+  border: 1px solid #dfd6c3;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+
+.metaRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+  padding: 4px 0;
+
+  &:not(:last-child) {
+    border-bottom: 1px dashed #eae4d2;
+    padding-bottom: 8px;
+  }
+}
+
+.metaLabel {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: $color-charcoal-muted;
+}
+
+.metaValue {
+  color: $color-slate-black;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-align: right;
+
+  .membershipDot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: $color-deep-amber;
+  }
+}
+
+// Right Column (Bio-metrics & Studio Details)
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sectionCard {
+  background-color: #f5f0e3;
+  border-radius: $radius-xl;
+  padding: 24px 18px;
+  border: 1px solid #dfd6c3;
+  box-shadow: 0 2px 12px rgba(28, 24, 18, 0.05);
+
+  @media (min-width: 640px) {
+    padding: 32px 28px;
+  }
+}
+
+.sectionHeaderRow {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+
+  @media (min-width: 640px) {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+  }
+}
+
+.sectionSuperTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: $color-deep-amber;
+  margin-bottom: 4px;
+
+  .tagIcon {
+    font-size: 18px;
+  }
+}
+
+.sectionTitle {
+  font-family: $font-headline;
+  font-size: 22px;
+  line-height: 1.3;
+  font-weight: 600;
+  color: $color-slate-black;
+  margin: 0 0 6px 0;
+
+  @media (min-width: 640px) {
+    font-size: 24px;
+  }
+}
+
+.sectionSubtitle {
+  font-size: 14px;
+  line-height: 1.5;
+  color: $color-charcoal-muted;
+  margin: 0;
+  max-width: 580px;
+}
+
+.privacyBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  padding: 6px 14px;
+  border-radius: $radius-full;
+  background-color: #ede5d1;
+  color: $color-charcoal-text;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  border: 1px solid #dfd6c3;
+}
+
+// Dual Inputs Grid (Height & Weight)
+.metricsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+
+  @media (min-width: 640px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+}
+
+.metricInputCard {
+  background-color: #fcfaf4;
+  border-radius: $radius-lg;
+  padding: 20px;
+  border: 1px solid #dfd6c3;
+  box-shadow: 0 1px 4px rgba(28, 24, 18, 0.03);
+  display: flex;
+  flex-direction: column;
+}
+
+.metricHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.metricLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: $color-slate-black;
+  margin: 0;
+
+  .metricIcon {
+    font-size: 18px;
+    color: $color-charcoal-muted;
+  }
+}
+
+.unitToggle {
+  display: inline-flex;
+  background-color: #f5f0e3;
+  padding: 3px;
+  border-radius: $radius-full;
+  border: 1px solid #dfd6c3;
+  gap: 2px;
+}
+
+.unitBtn {
+  border: none;
+  background: none;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: $radius-full;
+  color: $color-charcoal-muted;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1.2;
+
+  &:hover {
+    color: $color-slate-black;
+  }
+
+  &.activeUnit {
+    background-color: $color-slate-black;
+    color: #faebd0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.metricInput {
+  width: 100%;
+  background-color: #f5f0e3;
+  border: 1px solid #dfd6c3;
+  border-radius: $radius-md;
+  color: $color-slate-black;
+  font-size: 20px;
+  font-weight: 600;
+  padding: 12px 52px 12px 16px;
+  font-family: $font-body;
+  transition: all 0.2s ease;
+  min-height: 48px;
+
+  &:focus {
+    outline: none;
+    border-color: $color-deep-amber;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(212, 155, 56, 0.2);
+  }
+
+  &::placeholder {
+    color: #a4a7ab;
+  }
+}
+
+.inputSuffix {
+  position: absolute;
+  right: 16px;
+  color: $color-charcoal-muted;
+  font-size: 14px;
+  font-weight: 600;
+  pointer-events: none;
+}
+
+.metricHint {
+  font-size: 12px;
+  line-height: 1.4;
+  color: $color-charcoal-muted;
+  margin: 10px 0 0 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+
+  .hintIcon {
+    font-size: 15px;
+    color: $color-deep-amber;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+}
+
+// Selector Groups (Age Range & Gender)
+.fieldGroup {
+  margin-bottom: 24px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.fieldLabel {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  color: $color-slate-black;
+  margin-bottom: 10px;
+
+  .fieldSubtext {
+    font-size: 12px;
+    font-weight: 400;
+    color: $color-charcoal-muted;
+    margin-left: 6px;
+  }
+}
+
+.segmentedWrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.segmentBtn {
+  flex: 1 1 80px;
+  min-height: 44px;
+  padding: 10px 14px;
+  border-radius: $radius-md;
+  background-color: #fcfaf4;
+  border: 1px solid #dfd6c3;
+  color: $color-charcoal-text;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(28, 24, 18, 0.03);
+
+  &:hover {
+    background-color: #faebd0;
+    border-color: #d9a74a;
+    color: $color-slate-black;
+  }
+
+  &.activeSegment {
+    background-color: $color-slate-black;
+    color: #faebd0;
+    border-color: $color-slate-black;
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(18, 19, 20, 0.15);
+  }
+}
+
+.pillWrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pillBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 42px;
+  padding: 8px 18px;
+  border-radius: $radius-full;
+  background-color: #fcfaf4;
+  border: 1px solid #dfd6c3;
+  color: $color-charcoal-text;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(28, 24, 18, 0.03);
+
+  &:hover {
+    background-color: #faebd0;
+    border-color: #d9a74a;
+    color: $color-slate-black;
+  }
+
+  &.activePill {
+    background-color: $color-slate-black;
+    color: #faebd0;
+    border-color: $color-slate-black;
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(18, 19, 20, 0.15);
+  }
+
+  .pillCheck {
+    font-size: 16px;
+  }
+}
+
+// Teacher Guidance Card (Section D context)
+.teacherGuidanceCard {
+  background: linear-gradient(135deg, #f5f0e3 0%, #faebd0 100%);
+  border-radius: $radius-xl;
+  padding: 24px 20px;
+  border: 1px solid #dfd6c3;
+  box-shadow: 0 2px 8px rgba(28, 24, 18, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @media (min-width: 640px) {
+    padding: 28px 24px;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 20px;
+  }
+}
+
+.teacherAvatarBadge {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background-color: $color-sage-primary;
+  color: #faebd0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 2px solid #dfd6c3;
+  box-shadow: 0 2px 8px rgba(61, 90, 76, 0.2);
+
+  .teacherIcon {
+    font-size: 26px;
+  }
+}
+
+.guidanceText {
+  flex: 1;
+
+  .guidanceSuper {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: $color-deep-amber;
+    margin-bottom: 4px;
+  }
+
+  .guidanceTitle {
+    font-family: $font-headline;
+    font-size: 18px;
+    font-weight: 600;
+    color: $color-slate-black;
+    margin: 0 0 8px 0;
+  }
+
+  .guidanceBody {
+    font-size: 13px;
+    line-height: 1.6;
+    color: $color-charcoal-muted;
+    margin: 0;
+
+    strong {
+      color: $color-slate-black;
+    }
+  }
+}

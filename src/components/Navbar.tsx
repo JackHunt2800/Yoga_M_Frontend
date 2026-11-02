@@ -39,7 +39,13 @@ export const Navbar: React.FC = () => {
         </div>
       ),
     },
-    { type: 'divider' },
+    {
+      key: 'profile-settings',
+      icon: <UserOutlined />,
+      label: 'Profile & Settings',
+      onClick: () => router.push('/profile'),
+    },
+    { type: 'divider' as const },
     ...(isTeacher
       ? [
         {
@@ -48,15 +54,9 @@ export const Navbar: React.FC = () => {
           label: pathname.startsWith('/admin') ? 'View Student App' : 'Teacher Portal',
           onClick: () => router.push(pathname.startsWith('/admin') ? '/' : '/admin/curriculum'),
         },
+        { type: 'divider' as const },
       ]
       : []),
-    {
-      key: 'google-auth',
-      icon: <GoogleOutlined />,
-      label: user ? 'Re-authenticate with Google' : 'Sign in with Google',
-      onClick: () => loginWithGoogle(),
-    },
-    { type: 'divider' },
     {
       key: 'logout',
       danger: true,
@@ -250,6 +250,27 @@ export const Navbar: React.FC = () => {
                   </span>
                   Practice Library
                 </Link>
+
+                <Link
+                  href="/profile"
+                  style={{
+                    height: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 6,
+                    fontSize: 14,
+                    fontWeight: pathname === '/profile' ? 600 : 500,
+                    color: pathname === '/profile' ? '#121314' : '#5C5E62',
+                    borderBottom: pathname === '/profile' ? '2px solid #121314' : '2px solid transparent',
+                    textDecoration: 'none',
+                    transition: 'all 0.2s ease',
+                  }}
+                >
+                  <span className="material-symbols-outlined" style={{ fontSize: 18 }}>
+                    account_circle
+                  </span>
+                  Profile &amp; Settings
+                </Link>
               </>
             )}
           </nav>
@@ -435,6 +456,25 @@ export const Navbar: React.FC = () => {
             >
               <span className="material-symbols-outlined">self_improvement</span>
               Today&apos;s Practice
+            </Link>
+
+            <Link
+              href="/profile"
+              onClick={() => setMobileMenuOpen(false)}
+              style={{
+                padding: '10px 12px',
+                borderRadius: 8,
+                backgroundColor: pathname === '/profile' ? '#121314' : 'transparent',
+                color: pathname === '/profile' ? '#FFFFFF' : '#111213',
+                textDecoration: 'none',
+                fontWeight: 600,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
+              }}
+            >
+              <span className="material-symbols-outlined">account_circle</span>
+              Profile &amp; Settings
             </Link>
 
             {isTeacher && (

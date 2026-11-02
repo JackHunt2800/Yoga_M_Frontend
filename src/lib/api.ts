@@ -78,6 +78,34 @@ export interface TodayClassReview {
   assignedItems: PracticeItem[];
 }
 
+export interface UserProfileResponse {
+  uid: string;
+  email: string;
+  displayName: string;
+  photoURL?: string;
+  role: 'teacher' | 'student';
+  streakDays?: number;
+  height?: number;
+  heightUnit?: string;
+  weight?: number;
+  weightUnit?: string;
+  ageRange?: string;
+  gender?: string;
+  createdAt: string;
+  updatedAt?: string;
+}
+
+export interface ProfileSettings {
+  displayName?: string;
+  photoURL?: string;
+  height?: number;
+  heightUnit?: string;
+  weight?: number;
+  weightUnit?: string;
+  ageRange?: string;
+  gender?: string;
+}
+
 export const api = {
   async getMetrics(): Promise<StudioMetrics> {
     const res = await fetch(`${API_BASE_URL}/curriculum/metrics`, { cache: 'no-store' });
@@ -216,7 +244,6 @@ export const api = {
     return data;
   },
 
-
   async createTeacher(email: string, displayName?: string): Promise<{
     uid: string;
     email: string;
@@ -260,15 +287,7 @@ export const api = {
     return res.json();
   },
 
-  async getMe(token?: string, userId?: string): Promise<{
-    uid: string;
-    email: string;
-    displayName: string;
-    photoURL?: string;
-    role: 'teacher' | 'student';
-    streakDays?: number;
-    createdAt: string;
-  }> {
+  async getMe(token?: string, userId?: string): Promise<UserProfileResponse> {
     const authHeaders = await getAuthHeaders();
     const headers: Record<string, string> = { ...authHeaders };
     if (token) headers['Authorization'] = `Bearer ${token}`;
@@ -278,7 +297,7 @@ export const api = {
     return res.json();
   },
 
-  async updateMe(token: string | undefined, updates: { displayName?: string; photoURL?: string; role?: 'teacher' | 'student' }): Promise<any> {
+  async updateMe(token: string | undefined, updates: ProfileSettings): Promise<UserProfileResponse> {
     const authHeaders = await getAuthHeaders();
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
@@ -305,4 +324,3 @@ export const api = {
     return res.json();
   },
 };
-
