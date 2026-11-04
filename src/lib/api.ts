@@ -252,7 +252,7 @@ export const api = {
     createdAt: string;
   }> {
     const authHeaders = await getAuthHeaders();
-    const res = await fetch(`${API_BASE_URL}/auth/teacher`, {
+    const res = await fetch(`${API_BASE_URL}/users/teacher`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -275,7 +275,7 @@ export const api = {
     streakDays: number;
     createdAt: string;
   }> {
-    const res = await fetch(`${API_BASE_URL}/auth/student`, {
+    const res = await fetch(`${API_BASE_URL}/users/student`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, displayName }),
